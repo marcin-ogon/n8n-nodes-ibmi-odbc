@@ -12,6 +12,6 @@
     "moduleResolution": "Node",
     "sourceMap": true
   },
-  "include": ["nodes", "credentials", "index.ts"],
+  "include": ["src/nodes", "src/credentials", "index.ts"],
   "exclude": ["test", "dist", "node_modules"]
 }

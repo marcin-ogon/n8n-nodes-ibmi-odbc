@@ -23,15 +23,20 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
     "clean": "rimraf dist",
-    "lint": "eslint . --ext .ts",
+    "build": "npm run clean && tsc -p tsconfig.build.json && cp -f src/nodes/IbmIOdbc/*.png dist/nodes/IbmIOdbc/ 2>/dev/null || true",
+    "dev": "tsc -w -p tsconfig.build.json",
+    "lint": "eslint 'src/**/*.ts'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepare": "npm run build",
-    "release": "semantic-release",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "dev:n8n": "npm run build && N8N_CUSTOM_EXTENSIONS=dist npx n8n",
+    "dev:n8n:watch": "(npm run dev &) && sleep 2 && N8N_CUSTOM_EXTENSIONS=dist npx n8n",
+    "release:patch": "node scripts/release.mjs patch",
+    "release:minor": "node scripts/release.mjs minor",
+    "release:major": "node scripts/release.mjs major"
   },
   "engines": {
     "node": ">=18"
@@ -40,34 +45,32 @@
     "nodes": [
       {
         "type": "n8n-nodes-ibmi-odbc/dist/nodes/IbmIOdbc/IbmIOdbc.node.js",
-        "sourcePath": "nodes/IbmIOdbc/IbmIOdbc.node.ts"
+        "sourcePath": "src/nodes/IbmIOdbc/IbmIOdbc.node.ts"
       }
     ],
     "credentials": [
       {
         "type": "n8n-nodes-ibmi-odbc/dist/credentials/IbmiOdbc.credentials.js",
-        "sourcePath": "credentials/IbmiOdbc.credentials.ts"
+        "sourcePath": "src/credentials/IbmiOdbc.credentials.ts"
       }
-    ]
+    ],
+    "n8nNodesApiVersion": 1
   },
   "devDependencies": {
-    "@types/node": "^20.11.30",
-    "eslint": "^8.57.0",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "rimraf": "^5.0.5",
-    "typescript": "~5.5.4",
-    "vitest": "^1.6.0",
-    "ts-node": "^10.9.2",
-    "semantic-release": "^23.0.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/npm": "^11.0.0",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^10.0.3",
-    "n8n-workflow": "^1.42.0",
-    "prettier": "^3.3.3"
+    "@types/node": "^24.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/parser": "^8.42.0",
+    "prettier": "^3.3.3",
+    "n8n": "1.109.2",
+    "eslint": "^9.34.0",
+    "n8n-core": "1.108.0",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "vitest": "^3.2.4",
+    "rimraf": "^5.0.5"
   },
   "dependencies": {
-    "odbc": "^2.4.7"
+    "odbc": "^2.4.7",
+    "n8n-workflow": "1.106.0"
   }
 }

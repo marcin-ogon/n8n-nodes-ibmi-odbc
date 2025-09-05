@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { IbmIOdbc } from '../nodes/IbmIOdbc/IbmIOdbc.node';
+import { IbmIOdbc } from '../src/nodes/IbmIOdbc/IbmIOdbc.node';
 
 // Mock n8n workflow types minimal
 class ExecuteFunctionsMock {

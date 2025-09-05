@@ -1,3 +1,16 @@
+// copied from nodes with minimal path changes
+/*
+  IBM i ODBC Node for n8n
+
+  Implementation notes:
+  - This node uses the `odbc` package to create a pooled connection to an
+  IBM i system. Connection string is built from credentials provided by the
+  `IbmiOdbc` credential type.
+  - For performance, a simple singleton pool (OdbcPool) is used. This is
+  sufficient for the node's lifecycle in most n8n extension setups.
+  - Errors are wrapped in `NodeOperationError` to provide consistent error
+  messages to workflows that set `continueOnFail`.
+*/
 import type {
   IExecuteFunctions,
   INodeExecutionData,
@@ -41,14 +54,15 @@ export class IbmIOdbc implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'IBM i ODBC',
     name: 'ibmIOdbc',
+  icon: 'file:ibmi-odbc-logo.png',
     group: ['transform'],
     version: 1,
     description: 'Run SQL and CL commands on IBM i via ODBC',
     defaults: {
       name: 'IBM i ODBC',
     },
-    inputs: ['main'] as any,
-    outputs: ['main'] as any,
+  inputs: ['main'],
+  outputs: ['main'],
     credentials: [
       {
         name: 'ibmiOdbc',
@@ -151,7 +165,7 @@ export class IbmIOdbc implements INodeType {
     const items = this.getInputData();
     const returnData: INodeExecutionData[] = [];
 
-    const creds = (await this.getCredentials('ibmiOdbc')) as unknown as IbmiCredentials;
+  const creds = (await this.getCredentials('ibmiOdbc')) as unknown as IbmiCredentials;
     const connectionString = buildConnectionString(creds);
     const pool = await OdbcPool.getPool(connectionString);
 
@@ -166,7 +180,7 @@ export class IbmIOdbc implements INodeType {
             returnData.push({
               json: {
                 rows: result,
-                rowCount: Array.isArray(result) ? result.length : (result as any).count,
+                rowCount: Array.isArray(result) ? result.length : (result as unknown as { count?: number }).count,
               },
             });
           } else if (operation === 'callProcedure') {

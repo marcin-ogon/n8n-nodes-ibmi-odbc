@@ -1,8 +1,16 @@
-import type { ICredentialType, INodeProperties } from 'n8n-workflow';
+// Credential type for IBM i ODBC connections
+// Notes:
+// - `icon` references a file path that must be valid from the built `dist`
+//   layout. During development we keep the image in `src/nodes/IbmIOdbc` and
+//   copy it to `dist/nodes/IbmIOdbc` as part of the build step so the runtime
+//   credential icon resolves correctly when n8n loads the package.
+import type { ICredentialType, INodeProperties, Icon } from 'n8n-workflow';
 
 export class IbmiOdbc implements ICredentialType {
   name = 'ibmiOdbc';
   displayName = 'IBM i ODBC';
+  // icon path should point to the node image after build (dist/credentials -> ../nodes/...)
+  icon = 'file:../nodes/IbmIOdbc/ibmi-odbc-logo.png' as unknown as Icon;
   documentationUrl = '';
   properties: INodeProperties[] = [
     {
