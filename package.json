@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-ibmi-odbc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n community node to run SQL and CL commands on IBM i via ODBC",
   "license": "MIT",
   "author": "",
