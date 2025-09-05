@@ -2,46 +2,14 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-
-jobs:
-  lint-and-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Build (tsc check)
-        run: npm run build
-
-      - name: Test
-        run: npm test
-name: CI
-
-on:
-  push:
     branches: [main]
   pull_request:
     branches: [main]
 
 # Grant required permissions for semantic-release to push commits/tags and create release notes
 permissions:
-  contents: write      # needed to push tags and update CHANGELOG
-  issues: write        # allow commenting on issues (release notes references)
+  contents: write # needed to push tags and update CHANGELOG
+  issues: write # allow commenting on issues (release notes references)
   pull-requests: write # allow commenting on PRs
 
 jobs:
@@ -74,7 +42,7 @@ jobs:
       - name: Checkout (full history for semantic-release)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # semantic-release needs full git history & tags
+          fetch-depth: 0 # semantic-release needs full git history & tags
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
