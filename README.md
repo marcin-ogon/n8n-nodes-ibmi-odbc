@@ -24,14 +24,14 @@ This package provides a small, focused n8n community node to:
 - Run CL commands (via QSYS2.QCMDEXC)
 - Reuse connections with a lightweight pool for bulk item performance
 
-Why this project
------------------
+## Why this project
+
 If you need to integrate n8n workflows with IBM i systems using an ODBC driver,
 this node provides a straightforward, tested bridge with sensible defaults and
 options for paging, terse output, and metadata control.
 
-Quick start
------------
+## Quick start
+
 1. Install dependencies and build:
 
 ```bash
@@ -53,18 +53,18 @@ If you prefer to point n8n directly at `dist/` manually:
 N8N_CUSTOM_EXTENSIONS="$(pwd)/dist" npx n8n
 ```
 
-Features & options
-------------------
+## Features & options
+
 - Resource: Database or System
 - Database operations:
-	- Execute SQL (supports placeholders)
-	- Call Procedure
+  - Execute SQL (supports placeholders)
+  - Call Procedure
 - System operations:
-	- Run CL command (executes using QSYS2.QCMDEXC)
+  - Run CL command (executes using QSYS2.QCMDEXC)
 - Options: reuse connection, include/exclude metadata, terse output, continueOnFail handling
 
-Credentials
------------
+## Credentials
+
 Credential fields (in the node UI):
 
 - Host (system address)
@@ -73,24 +73,24 @@ Credential fields (in the node UI):
 - Library List (DBQ) — default: `*USRLIBL`
 - Naming mode — `*SQL` or `*SYS`
 
-Implementation notes
---------------------
-- The node uses the `odbc` package and a simple singleton pool to reuse
-	connections within the node process.
-- Credential icon files live under `src/nodes/<Node>/` and are copied to
-	`dist/nodes/<Node>/` during the build so the `file:` paths resolve at runtime.
+## Implementation notes
 
-Using the node
---------------
+- The node uses the `odbc` package and a simple singleton pool to reuse
+  connections within the node process.
+- Credential icon files live under `src/nodes/<Node>/` and are copied to
+  `dist/nodes/<Node>/` during the build so the `file:` paths resolve at runtime.
+
+## Using the node
+
 - SQL: provide a query in the `SQL` field; enable `Use Parameters` to bind a
-	JSON array or object.
-	- Example parameter formats:
-		- Array: `["ACME", 42]`
-		- Object: `{ "CUST_ID": 42 }`
+  JSON array or object.
+  - Example parameter formats:
+    - Array: `["ACME", 42]`
+    - Object: `{ "CUST_ID": 42 }`
 - CL: provide the CL command text (e.g., `DSPLIBL`) in the `CL Command` field.
 
-Development & testing
----------------------
+## Development & testing
+
 - Install deps and run unit tests:
 
 ```bash
@@ -106,29 +106,29 @@ npm run dev:n8n:watch
 ```
 
 - Tests use `vitest` and an alias to `test/__mocks__/n8n-workflow.ts` so no
-	live n8n runtime is required.
+  live n8n runtime is required.
 
-Code style
-----------
+## Code style
+
 - Prettier is used for formatting. Run:
 
 ```bash
 npm run format
 ```
 
-Releasing
----------
+## Releasing
+
 - Releases are handled with the `scripts/release.mjs` helper and a GitHub
-	Actions workflow that publishes tags `vX.Y.Z` to npm (requires `NPM_TOKEN`).
+  Actions workflow that publishes tags `vX.Y.Z` to npm (requires `NPM_TOKEN`).
 
-Troubleshooting
----------------
+## Troubleshooting
+
 - If the node does not appear in n8n:
-	- Ensure `dist/` exists and was built
-	- Verify `N8N_CUSTOM_EXTENSIONS` points to the absolute path of `dist/`
+  - Ensure `dist/` exists and was built
+  - Verify `N8N_CUSTOM_EXTENSIONS` points to the absolute path of `dist/`
 - TLS / driver issues: try `Ignore Unauthorized TLS` first; if it works, add a
-	CA instead of ignoring.
+  CA instead of ignoring.
 
-License
--------
+## License
+
 MIT

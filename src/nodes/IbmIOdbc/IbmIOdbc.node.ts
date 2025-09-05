@@ -54,15 +54,15 @@ export class IbmIOdbc implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'IBM i ODBC',
     name: 'ibmIOdbc',
-  icon: 'file:ibmi-odbc-logo.png',
+    icon: 'file:ibmi-odbc-logo.png',
     group: ['transform'],
     version: 1,
     description: 'Run SQL and CL commands on IBM i via ODBC',
     defaults: {
       name: 'IBM i ODBC',
     },
-  inputs: ['main'],
-  outputs: ['main'],
+    inputs: ['main'],
+    outputs: ['main'],
     credentials: [
       {
         name: 'ibmiOdbc',
@@ -165,7 +165,7 @@ export class IbmIOdbc implements INodeType {
     const items = this.getInputData();
     const returnData: INodeExecutionData[] = [];
 
-  const creds = (await this.getCredentials('ibmiOdbc')) as unknown as IbmiCredentials;
+    const creds = (await this.getCredentials('ibmiOdbc')) as unknown as IbmiCredentials;
     const connectionString = buildConnectionString(creds);
     const pool = await OdbcPool.getPool(connectionString);
 
@@ -180,7 +180,9 @@ export class IbmIOdbc implements INodeType {
             returnData.push({
               json: {
                 rows: result,
-                rowCount: Array.isArray(result) ? result.length : (result as unknown as { count?: number }).count,
+                rowCount: Array.isArray(result)
+                  ? result.length
+                  : (result as unknown as { count?: number }).count,
               },
             });
           } else if (operation === 'callProcedure') {
