@@ -1,17 +1,12 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "CommonJS",
-    "declaration": true,
     "outDir": "dist",
-    "rootDir": ".",
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "moduleResolution": "Node",
-    "sourceMap": true
+    "declaration": true,
+    "sourceMap": true,
+    // Force CommonJS output for n8n compatibility while tests use ESNext modules.
+    "module": "CommonJS"
   },
-  "include": ["src/nodes", "src/credentials", "index.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["test", "dist", "node_modules"]
 }

@@ -10,7 +10,7 @@ export class IbmiOdbc implements ICredentialType {
   name = 'ibmiOdbc';
   displayName = 'IBM i ODBC';
   // icon path should point to the node image after build (dist/credentials -> ../nodes/...)
-  icon = 'file:../nodes/IbmIOdbc/ibmi-odbc-logo.png' as unknown as Icon;
+  icon: Icon = 'file:../nodes/IbmIOdbc/ibmi-odbc-logo.png';
   documentationUrl = '';
   properties: INodeProperties[] = [
     {
